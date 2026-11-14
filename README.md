@@ -54,7 +54,7 @@ Match each tool call to its result using the printed call ID. A correct final an
 | 🌐 **DeepWiki** | Run the agent with `--deepwiki` and ask about `karpathy/nanochat`. | On Windows, the full-wiki call returned data but missed the one-sentence format. The focused `ask_wiki_question` call returned a result that Qwen summarized in one sentence. |
 | 🤗 **Hugging Face MCP** | Run the agent with `--huggingface` and ask it to search the public Hub for `bert-base-uncased`. | With both public servers enabled on Windows, Qwen called `hub_repo_search` with a model filter and limit of one, then returned `google-bert/bert-base-uncased`. |
 | 🔌 **Streamable HTTP server** | Start the server with `--http` and connect the agent with `--http-url`. | On Windows, the agent discovered four tools at `http://127.0.0.1:8001/mcp` and quoted the note returned by `read_note`. Direct adapter checks also exercised CI evidence over HTTP. |
-| 🖥️ **Remote host** | Run the HTTP server on a host you control and connect over an SSH tunnel. | [Deployment steps](#-run-on-another-machine) are available. A remote host was not provisioned for this project. |
+| 🖥️ **Remote host** | Run the HTTP server on a host you control and connect over an SSH tunnel. | [Deployment steps](#-run-on-another-machine) are available. Windows-to-WSL2 SSH forwarding was verified on one laptop. Deployment on a separate machine remains unverified. |
 | 🟪 **BRI evidence** | Ask for a known or unknown run ID. | The Windows agent cited the known run and reported a missing record for an unknown run. |
 
 ### 📝 Read a local note
@@ -101,6 +101,15 @@ ssh -N -L 127.0.0.1:8001:127.0.0.1:8000 user@your-server
 
 Run the Windows agent with `--http-url http://127.0.0.1:8001/mcp`. Ollama runs on Windows and FastMCP reads fixtures and notes on the remote host. The server binds to loopback and SSH controls remote access. A public endpoint would require its own authentication and deployment configuration.
 
+### ✅ Windows-to-WSL2 tunnel verification
+
+FastMCP ran in Ubuntu on port `18000`. SSH on port `2222` forwarded Windows port `18001` to that service. The Windows agent and Ollama used the forwarded MCP endpoint at `http://127.0.0.1:18001/mcp`.
+
+| Tunnel state | Observed result |
+|---|---|
+| Available | The Windows agent discovered four MCP tools. `read_note` returned `found` for `wsl-tunnel`, and Qwen quoted the note created inside Ubuntu. |
+| Unavailable | Starting the agent at the same URL failed before tool discovery with `httpx.ConnectError: All connection attempts failed`. |
+
 ## ✅ Observed Windows baseline
 
 | Check | Observed result |
@@ -110,7 +119,7 @@ Run the Windows agent with `--http-url http://127.0.0.1:8001/mcp`. Ollama runs o
 | Live known CI run | Qwen cited run `21890541227` and distinguished the failed validation job from the unavailable cause. |
 | Live unknown CI run | Qwen reported that the fixture had no evidence for `99999999999`. |
 
-The note reader, DeepWiki, Hugging Face, and loopback HTTP were also verified with live Qwen on Windows. The SSH tunnel deployment remains unverified.
+The note reader, DeepWiki, Hugging Face, and loopback HTTP were also verified with live Qwen on Windows. The Windows-to-WSL2 tunnel check below verifies the connection path.
 
 ## 🟪 Inspect the BRI evidence
 
