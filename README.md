@@ -193,3 +193,9 @@ The checked-in fixture comes from [Home Assistant BRI demo run 21890541227](http
 | `fixtures/home-assistant-run.json` | Saved GitHub Actions evidence with source URLs. |
 | `tests/test_stdio.py` | Subprocess tests for discovery, lookups, note path validation, and adapter integration. |
 | `requirements.txt` | Dependency versions used for verification. |
+
+## 🙏 Acknowledgments
+
+Thanks to **Darsh Shah** for writing [How to Build an MCP Server with FastMCP for Your Local AI Agent](https://www.freecodecamp.org/news/build-an-mcp-server-with-fastmcp-for-local-ai-agent/) for **freeCodeCamp**. His tutorial provided the foundation for the local FastMCP server, the LangChain and Ollama agent, and the DeepWiki integration.
+
+This project builds on that tutorial with a Markdown note reader, Hugging Face MCP search, a read-only Home Assistant CI evidence lookup, and Streamable HTTP and SSH tunnel exercises.
