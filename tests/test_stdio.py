@@ -19,7 +19,7 @@ class StdioTests(unittest.IsolatedAsyncioTestCase):
             tools = await client.list_tools()
             self.assertEqual(
                 {tool.name for tool in tools},
-                {"current_time", "word_count", "get_build_evidence"},
+                {"current_time", "word_count", "get_build_evidence", "read_note"},
             )
 
             count = await client.call_tool("word_count", {"text": "Cedar needs a smoke test."})
@@ -35,6 +35,17 @@ class StdioTests(unittest.IsolatedAsyncioTestCase):
 
             missing = await client.call_tool("get_build_evidence", {"run_id": "99999999999"})
             self.assertEqual(missing.data, {"status": "missing", "run_id": "99999999999"})
+
+    async def test_note_lookup_and_path_validation(self) -> None:
+        transport = StdioTransport(command=sys.executable, args=[str(SERVER)])
+        async with Client(transport, timeout=15) as client:
+            found = await client.call_tool("read_note", {"name": "cedar"})
+            self.assertEqual(found.data["status"], "found")
+            self.assertIn("Cedar needs a CI smoke test.", found.data["text"])
+            missing = await client.call_tool("read_note", {"name": "missing-smoke-test-note"})
+            self.assertEqual(missing.data["status"], "missing")
+            traversal = await client.call_tool("read_note", {"name": "../README"})
+            self.assertEqual(traversal.data["status"], "invalid_name")
 
     async def test_langchain_adapter_discovers_and_calls_tools(self) -> None:
         client = MultiServerMCPClient(
