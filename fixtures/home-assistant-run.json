@@ -1,0 +1,19 @@
+{
+  "repository": "anne500/home-assistant-bri-demo",
+  "run_id": "21890541227",
+  "run_attempt": 1,
+  "workflow": "Validate with hassfest",
+  "head_sha": "3ba7a1742ae322d4241777fafb1d9860519c01a0",
+  "conclusion": "failure",
+  "source_url": "https://github.com/anne500/home-assistant-bri-demo/actions/runs/21890541227",
+  "jobs": [
+    {
+      "name": "validate",
+      "conclusion": "failure",
+      "source_url": "https://github.com/anne500/home-assistant-bri-demo/actions/runs/21890541227/job/63195208285",
+      "failed_steps": []
+    }
+  ],
+  "run_artifact_count": 0,
+  "evidence_scope": "GitHub Actions run and job metadata. The jobs response contained no step records. Job log contents were not captured."
+}
