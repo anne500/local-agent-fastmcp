@@ -52,13 +52,13 @@ Match each tool call to its result using the printed call ID. A correct final an
 
 | Extension | How to try it | Verification |
 |---|---|---|
-| 🟢 **Local Markdown note reader** | Run the default agent and ask it to read the note named `cedar`. | On Windows, Qwen handled a missing note and quoted it after the file was created. Direct tests also checked path traversal. |
-| 🟢 **DeepWiki** | Run the agent with `--deepwiki` and ask about `karpathy/nanochat`. | On Windows, the full-wiki call returned data but missed the one-sentence format. The focused `ask_wiki_question` call returned a result that Qwen summarized in one sentence. |
-| 🟢 **Hugging Face MCP** | Run the agent with `--huggingface` and ask it to search the public Hub for `bert-base-uncased`. | With both public servers enabled on Windows, Qwen called `hub_repo_search` with a model filter and limit of one, then returned `google-bert/bert-base-uncased`. |
-| 🟢 **Streamable HTTP server** | Start the server with `--http` and connect the agent with `--http-url`. | On Windows, the agent discovered four tools at `http://127.0.0.1:8001/mcp` and quoted the note returned by `read_note`. Direct adapter checks also exercised CI evidence over HTTP. |
-| 🟢 **Windows-to-WSL2 SSH tunnel** | Run FastMCP in Ubuntu and connect from Windows through SSH. | The Ubuntu note was retrieved with the tunnel available. The same URL failed when it was unavailable. See [tunnel verification](#-windows-to-wsl2-tunnel-verification). |
-| 🟠 **Separate physical machine** | Run FastMCP on a second machine and connect from Windows through SSH. | Pending access to a second machine. See the [two-machine runbook](#-run-on-another-machine). |
-| 🟢 **BRI evidence** | Ask for a known or unknown run ID. | The Windows agent cited the known run and reported a missing record for an unknown run. |
+| 🟢 📝 **Local Markdown note reader** | Run the default agent and ask it to read the note named `cedar`. | On Windows, Qwen handled a missing note and quoted it after the file was created. Direct tests also checked path traversal. |
+| 🟢 🌐 **DeepWiki** | Run the agent with `--deepwiki` and ask about `karpathy/nanochat`. | On Windows, the full-wiki call returned data but missed the one-sentence format. The focused `ask_wiki_question` call returned a result that Qwen summarized in one sentence. |
+| 🟢 🤗 **Hugging Face MCP** | Run the agent with `--huggingface` and ask it to search the public Hub for `bert-base-uncased`. | With both public servers enabled on Windows, Qwen called `hub_repo_search` with a model filter and limit of one, then returned `google-bert/bert-base-uncased`. |
+| 🟢 🔌 **Streamable HTTP server** | Start the server with `--http` and connect the agent with `--http-url`. | On Windows, the agent discovered four tools at `http://127.0.0.1:8001/mcp` and quoted the note returned by `read_note`. Direct adapter checks also exercised CI evidence over HTTP. |
+| 🟢 🔐 **Windows-to-WSL2 SSH tunnel** | Run FastMCP in Ubuntu and connect from Windows through SSH. | The Ubuntu note was retrieved with the tunnel available. The same URL failed when it was unavailable. See [tunnel verification](#-windows-to-wsl2-tunnel-verification). |
+| 🟠 🖥️ **Separate physical machine** | Run FastMCP on a second machine and connect from Windows through SSH. | Pending access to a second machine. See the [two-machine runbook](#-run-on-another-machine). |
+| 🟢 🧪 **BRI evidence** | Ask for a known or unknown run ID. | The Windows agent cited the known run and reported a missing record for an unknown run. |
 
 ### 📝 Read a local note
 
