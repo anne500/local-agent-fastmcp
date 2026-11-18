@@ -2,39 +2,6 @@
 
 A Windows-friendly implementation of [Darsh Shah’s freeCodeCamp tutorial](https://www.freecodecamp.org/news/build-an-mcp-server-with-fastmcp-for-local-ai-agent/), with a read-only Build Release and Integration Engineering example. The default run uses your local Ollama model and needs no API key.
 
-<a id="base-tutorial"></a>
-
-## 🟦 Base tutorial
-
-The tutorial builds a local FastMCP server with time and word-count tools, then connects a LangChain agent running Qwen through Ollama to that server over stdio. It also connects the agent to the hosted DeepWiki MCP server. The Windows implementation makes DeepWiki opt-in and adds the capabilities below. [Darsh Shah’s freeCodeCamp tutorial: How to Build an MCP Server with FastMCP for Your Local AI Agent](https://www.freecodecamp.org/news/build-an-mcp-server-with-fastmcp-for-local-ai-agent/)
-
-<a id="-extensions"></a>
-
-## 🧩 Extensions added in Project 7
-
-🟢 **Verified hands-on** · 🟠 **Pending hardware**
-
-| Origin | Item | Scope or contribution | Verification |
-| --- |---|---|---|
-| 🟦 Tutorial baseline | [Base tutorial](#base-tutorial) | FastMCP time and word-count tools over stdio, with a LangChain and Ollama agent and hosted DeepWiki integration. | See the [tutorial baseline](#base-tutorial). |
-| 🧩 Extension | 🟢 📝 **Local Markdown note reader** | Run the default agent and ask it to read the note named `cedar`. | On Windows, Qwen handled a missing note and quoted it after the file was created. Direct tests also checked path traversal. |
-| 🛠️ Adaptation | 🟢 🌐 **Optional DeepWiki mode (adaptation)** | Run the agent with `--deepwiki` and ask about `karpathy/nanochat`. | On Windows, the full-wiki call returned data but missed the one-sentence format. The focused `ask_wiki_question` call returned a result that Qwen summarized in one sentence. |
-| 🧩 Extension | 🟢 🤗 **Hugging Face MCP** | Run the agent with `--huggingface` and ask it to search the public Hub for `bert-base-uncased`. | With both public servers enabled on Windows, Qwen called `hub_repo_search` with a model filter and limit of one, then returned `google-bert/bert-base-uncased`. |
-| 🧩 Extension | 🟢 🔌 **Streamable HTTP server** | Start the server with `--http` and connect the agent with `--http-url`. | On Windows, the agent discovered four tools at `http://127.0.0.1:8001/mcp` and quoted the note returned by `read_note`. Direct adapter checks also exercised CI evidence over HTTP. |
-| 🧩 Extension | 🟢 🔐 **Windows-to-WSL2 SSH tunnel** | Run FastMCP in Ubuntu and connect from Windows through SSH. | The Ubuntu note was retrieved with the tunnel available. The same URL failed when it was unavailable. See [tunnel verification](#-windows-to-wsl2-tunnel-verification). |
-| 🟠 Planned extension | 🟠 🖥️ **Separate physical machine** | Run FastMCP on a second machine and connect from Windows through SSH. | Pending access to a second machine. See the [two-machine runbook](#-run-on-another-machine). |
-| 🧩 Extension | 🟢 🧪 **BRI evidence** | Ask for a known or unknown run ID. | The Windows agent cited the known run and reported a missing record for an unknown run. |
-
-<a id="explore-the-project"></a>
-
-## 🧭 Explore the project
-
-[🧩 Architecture](#architecture) · [🚀 Setup](#setup) · [🧪 Results & verification](#verification) · [🗂️ Evidence & guides](#bri-evidence) · [📚 Tutorial credit](#tutorial-credit) · [🎨 Visual standard](https://github.com/anne500/multi-agent-study-guide/blob/main/VISUAL_STYLE.md#readme-presentation-standard)
-
-<a id="architecture"></a>
-
-## 🧩 Architecture
-
 ```mermaid
 flowchart TD
     A["LangChain agent"] <-->|Local model API| B["Ollama · Qwen 3.5"]
@@ -51,8 +18,6 @@ flowchart TD
     class D,F evidence
     class E remote
 ```
-
-<a id="setup"></a>
 
 ## 🟦 Run on Windows
 
@@ -81,7 +46,19 @@ Keep the Ollama app running. If `qwen3.5:4b` is absent from `ollama list`, run `
 
 Match each tool call to its result using the printed call ID. A correct final answer can still hide a skipped call or incorrect argument, so check the transcript as well.
 
-## 🛠️ Extension walkthroughs
+## 🟩 Extensions
+
+🟢 **Verified hands-on** · 🟠 **Pending hardware**
+
+| Extension | How to try it | Verification |
+|---|---|---|
+| 🟢 📝 **Local Markdown note reader** | Run the default agent and ask it to read the note named `cedar`. | On Windows, Qwen handled a missing note and quoted it after the file was created. Direct tests also checked path traversal. |
+| 🟢 🌐 **DeepWiki** | Run the agent with `--deepwiki` and ask about `karpathy/nanochat`. | On Windows, the full-wiki call returned data but missed the one-sentence format. The focused `ask_wiki_question` call returned a result that Qwen summarized in one sentence. |
+| 🟢 🤗 **Hugging Face MCP** | Run the agent with `--huggingface` and ask it to search the public Hub for `bert-base-uncased`. | With both public servers enabled on Windows, Qwen called `hub_repo_search` with a model filter and limit of one, then returned `google-bert/bert-base-uncased`. |
+| 🟢 🔌 **Streamable HTTP server** | Start the server with `--http` and connect the agent with `--http-url`. | On Windows, the agent discovered four tools at `http://127.0.0.1:8001/mcp` and quoted the note returned by `read_note`. Direct adapter checks also exercised CI evidence over HTTP. |
+| 🟢 🔐 **Windows-to-WSL2 SSH tunnel** | Run FastMCP in Ubuntu and connect from Windows through SSH. | The Ubuntu note was retrieved with the tunnel available. The same URL failed when it was unavailable. See [tunnel verification](#-windows-to-wsl2-tunnel-verification). |
+| 🟠 🖥️ **Separate physical machine** | Run FastMCP on a second machine and connect from Windows through SSH. | Pending access to a second machine. See the [two-machine runbook](#-run-on-another-machine). |
+| 🟢 🧪 **BRI evidence** | Ask for a known or unknown run ID. | The Windows agent cited the known run and reported a missing record for an unknown run. |
 
 ### 📝 Read a local note
 
@@ -194,8 +171,6 @@ flowchart LR
 
 4. **Pass criteria.** Ask the agent to read `physical-host`. Verify that `read_note` returns `found` and that Qwen quotes the server-only text. Exit the agent, stop the SSH tunnel, and start the agent at the same URL with FastMCP still running. Verify that tool discovery fails. Save both transcripts with the test date and repository commit.
 
-<a id="verification"></a>
-
 ## ✅ Observed Windows baseline
 
 | Check | Observed result |
@@ -206,8 +181,6 @@ flowchart LR
 | Live unknown CI run | Qwen reported that the fixture had no evidence for `99999999999`. |
 
 The note reader, DeepWiki, Hugging Face, and loopback HTTP were also verified with live Qwen on Windows. The Windows-to-WSL2 results are in the [tunnel verification section](#-windows-to-wsl2-tunnel-verification).
-
-<a id="bri-evidence"></a>
 
 ## 🟪 Inspect the BRI evidence
 
@@ -220,8 +193,6 @@ The checked-in fixture comes from [Home Assistant BRI demo run 21890541227](http
 | `fixtures/home-assistant-run.json` | Saved GitHub Actions evidence with source URLs. |
 | `tests/test_stdio.py` | Subprocess tests for discovery, lookups, note path validation, and adapter integration. |
 | `requirements.txt` | Dependency versions used for verification. |
-
-<a id="tutorial-credit"></a>
 
 ## 🙏 Acknowledgments
 
