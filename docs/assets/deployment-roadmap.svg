@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="343" viewBox="0 0 1080 343" role="img" aria-labelledby="title description">
+  <title id="title">FastMCP deployment roadmap</title>
+  <desc id="description">Local stdio, loopback HTTP and the Windows-to-WSL2 tunnel were verified. A two-machine run is pending.</desc>
+  <rect width="1080" height="343" rx="22" fill="#F8FAFC"/>
+  <path d="M22 0H1058Q1080 0 1080 22V126H0V22Q0 0 22 0" fill="#0F172A"/>
+  <g font-family="DejaVu Sans, Arial, sans-serif">
+    <text x="34" y="34" fill="#93C5FD" font-size="14" font-weight="700" letter-spacing="2">AI PROJECTS 71826 / PROJECT 07</text>
+    <text x="34" y="77" fill="#FFFFFF" font-size="36" font-weight="700">FastMCP deployment roadmap</text>
+    <text x="34" y="105" fill="#CBD5E1" font-size="19">Each stage records its own verification checkpoint</text>
+    <g transform="translate(34 148)">
+      <rect width="324" height="163" rx="14" fill="#DBEAFE" stroke="#2563EB" stroke-width="2"/>
+      <text x="20" y="31" fill="#1D4ED8" font-size="15" font-weight="700" letter-spacing="1">01 / VERIFIED</text>
+      <text x="20" y="70" fill="#172554" font-size="20" font-weight="700">Local stdio</text>
+      <text x="20" y="107" fill="#172554" font-size="17">The agent starts its server</text>
+      <text x="20" y="137" fill="#172554" font-size="17">Discovery and tool calls</text>
+    </g>
+    <g transform="translate(378 148)">
+      <rect width="324" height="163" rx="14" fill="#DCFCE7" stroke="#15803D" stroke-width="2"/>
+      <text x="20" y="31" fill="#166534" font-size="15" font-weight="700" letter-spacing="1">02 / VERIFIED</text>
+      <text x="20" y="70" fill="#14532D" font-size="20" font-weight="700">HTTP and WSL2</text>
+      <text x="20" y="107" fill="#14532D" font-size="17">Windows loopback and tunnel</text>
+      <text x="20" y="137" fill="#14532D" font-size="17">Ubuntu note retrieved</text>
+    </g>
+    <g transform="translate(722 148)">
+      <rect width="324" height="163" rx="14" fill="#FEF3C7" stroke="#D97706" stroke-width="2"/>
+      <text x="20" y="31" fill="#92400E" font-size="15" font-weight="700" letter-spacing="1">03 / PENDING</text>
+      <text x="20" y="70" fill="#451A03" font-size="20" font-weight="700">Two physical hosts</text>
+      <text x="20" y="107" fill="#451A03" font-size="17">Windows client and Linux server</text>
+      <text x="20" y="137" fill="#451A03" font-size="17">Requires a second machine</text>
+    </g>
+  </g>
+</svg>
